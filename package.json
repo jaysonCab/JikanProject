@@ -4,6 +4,8 @@
   "description": "This is for my project#1 in Advanced Web Programming. Code for Project Milestone 2.",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
