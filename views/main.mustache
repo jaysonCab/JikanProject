@@ -3,12 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>Game Reviewer</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
     <p class = 'testing'>Testing Purposes css connection</p>
+
+    <h1>Testing Table</h1>
+    <table>
+        <tr>
+            <th>Game Title</th>
+            <th>Personal Rating</th>
+            <th>Opinion</th>
+            <th>Number Times Played</th>
+            <th>First Played Date</th>
+            <th>Favourite</th>
+        </tr>
+            {{ #games }}
+        <tr>
+            <td>{{ title }}</td>
+            <td>{{ personal_rating }}</td>
+            <td>{{ opinion }}</td>
+            <td>{{ number_times_played }}</td>
+            <td>{{ first_played }}</td>
+            <td>{{ favourite }}</td>
+        </tr>
+            {{ /games }}
+    </table>
 
 </body>
 </html>

@@ -14,8 +14,12 @@ async function makeConnection() {
     })
 }
 
-module.exports = { makeConnection };
+async function displayAllRecords() {
+    const results = await db.all("SELECT * FROM games");
+    return results;
+}
 
+module.exports = { makeConnection, displayAllRecords };
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (

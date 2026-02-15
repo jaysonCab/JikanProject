@@ -12,8 +12,10 @@ app.use(express.static(path.join(__dirname, "../public"))); // Public file best 
 
 Model.makeConnection();
 
-app.get("/", function(req, res) {
-        res.render("main", {title: "Testing Purposes Templating!"});
+app.get("/", async function(req, res) {
+    const gameArray = await Model.displayAllRecords();
+
+    res.render("main", { games: gameArray });
 });
 
 app.listen(3000, () => {
