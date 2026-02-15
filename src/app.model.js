@@ -14,12 +14,21 @@ async function makeConnection() {
     })
 }
 
+async function addGame(title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite) {
+    
+    await db.run(`
+        INSERT INTO games (title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `, [title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite]);
+
+}
+
 async function displayAllRecords() {
     const results = await db.all("SELECT * FROM games");
     return results;
 }
 
-module.exports = { makeConnection, displayAllRecords };
+module.exports = { makeConnection, displayAllRecords, addGame };
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (

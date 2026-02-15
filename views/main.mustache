@@ -9,12 +9,62 @@
 <body>
 
     <p class = 'testing'>Testing Purposes css connection</p>
+    
+    <h2><a href = "addGameList">Add a Game</a></h2>
+    {{ #addGame }}
+    <form action="/addGame" method="POST">
+        <div>
+            <label for="title">Game Title *</label>
+            <input id="title" name="title" type="text" required maxlength="100" />
+        </div>
+
+        <div>
+            <label for="personal_rating">Personal Rating (0–10) *</label>
+            <input id="personal_rating" name="personal_rating" type="number" required min="0" max="10" />
+        </div>
+
+        <div>
+            <label for="image">image</label>
+            <input id="image" name="image" type="text" maxlength="500" />
+        </div>
+
+        <div>
+            <label for="opinion">Opinion</label>
+            <input id="opinion" name="opinion" type="text" maxlength="500" />
+        </div>
+
+        <div>
+            <label for="number_times_played">Number Times Played *</label>
+            <input id="number_times_played" name="number_times_played" type="number" required min="0" />
+        </div>
+
+        <div>
+            <label for="first_played">First Played *</label>
+            <input id="first_played" name="first_played" type="date" required />
+        </div>
+
+        <div>
+            <label for="total_hours">Hours Total</label>
+            <input id="total_hours" name="total_hours" type="number" required min="0" />
+        </div>
+
+        <div>
+            <label for="favourite">Favourite</label>
+            <input id="favourite" name="favourite" type="checkbox" value="1" />
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+    {{ /addGame }}
+
+    <hr>
 
     <h1>Testing Table</h1>
     <table>
         <tr>
             <th>Game Title</th>
             <th>Personal Rating</th>
+            <th>Image</th>
             <th>Opinion</th>
             <th>Number Times Played</th>
             <th>First Played Date</th>
@@ -24,6 +74,11 @@
         <tr>
             <td>{{ title }}</td>
             <td>{{ personal_rating }}</td>
+            <td>
+                {{#image}}
+                    <img src="{{ image }}" alt="Game Image" onerror="this.src='/placeholder.png'"> width="100">
+                {{/image}}
+            </td>
             <td>{{ opinion }}</td>
             <td>{{ number_times_played }}</td>
             <td>{{ first_played }}</td>
