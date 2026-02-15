@@ -15,3 +15,18 @@ async function makeConnection() {
 }
 
 module.exports = { makeConnection };
+
+
+// await db.exec(`
+//     CREATE TABLE IF NOT EXISTS games (
+//         id INTEGER PRIMARY KEY AUTOINCREMENT,
+//         title TEXT NOT NULL,
+//         personal_rating INTEGER NOT NULL,
+//         image TEXT NOT NULL,
+//         opinion TEXT,
+//         number_times_played INTEGER NOT NULL,
+//         first_played DATE NOT NULL,
+//         total_hours INTEGER,
+//         favourite INTEGER NOT NULL DEFAULT 0
+//     )
+// `);
