@@ -16,10 +16,12 @@ async function makeConnection() {
 
 async function addGame(title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite) {
     
+    const favouriteValue = favourite ? 1 : 0;
+
     await db.run(`
         INSERT INTO games (title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `, [title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite]);
+    `, [title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favouriteValue]);
 
 }
 
