@@ -59,33 +59,41 @@
 
     <hr>
 
-    <h1>Testing Table</h1>
-    <table>
-        <tr>
-            <th>Game Title</th>
-            <th>Personal Rating</th>
-            <th>Image</th>
-            <th>Opinion</th>
-            <th>Number Times Played</th>
-            <th>First Played Date</th>
-            <th>Favourite</th>
-        </tr>
-            {{ #games }}
-        <tr>
-            <td>{{ title }}</td>
-            <td>{{ personal_rating }}</td>
-            <td>
-                {{#image}}
-                    <img src="{{ image }}" alt="Game Image" onerror="this.src='/placeholder.png'"> width="100">
-                {{/image}}
-            </td>
-            <td>{{ opinion }}</td>
-            <td>{{ number_times_played }}</td>
-            <td>{{ first_played }}</td>
-            <td>{{ favourite }}</td>
-        </tr>
-            {{ /games }}
-    </table>
+    <div class="cards">
+        {{#games}}
+            <div class="card">
+                <div class="cardTop">
+                    <div class="cardTitle">{{ title }}</div>
+                    <div class="cardRating">⭐ {{ personal_rating }}/10</div>
+                </div>
+
+                <div class="cardBody">
+                    <div class="cardImage">
+                        {{#image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
+                            <img src="{{ image }}" alt="cover"
+                                loading="lazy" 
+                                onerror="this.src='/placeholder.png'">
+                        {{/image}}
+                        {{^image}} <!-- If image does not load -->
+                            <img src="/placeholder.png" alt="placeholder" loading="lazy">
+                        {{/image}}
+                    </div>
+
+                    <div class="cardInfo">
+                        {{#opinion}}<div><b>Opinion:</b> {{ opinion }}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
+                        <div><b>Times played:</b> {{ number_times_played }}</div>
+                        <div><b>First played:</b> {{ first_played }}</div>
+                        <div><b>Hours:</b> {{ total_hours }}</div>
+                        <div><b>Favourite:</b> {{ favourite }}</div>
+                    </div>
+                </div>
+            </div>
+        {{/games}}
+
+        {{^games}} <!-- If there are no values within table -->
+            <p>No games yet. Add one above.</p>
+        {{/games}}
+    </div>
 
 </body>
 </html>

@@ -3,3 +3,58 @@
 .testing {
     color: red;
 }
+
+/* When screen is below 800px, limit css */
+@media (max-width: 800px){
+    .cards{ grid-template-columns: 1fr; }
+}
+
+.cards{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 cards per row */
+    gap: 16px;
+    align-items: start;
+}
+
+.card{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 14px;
+    background: #fff;
+}
+
+.cardTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
+.cardTitle{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cardRating{
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.cardBody{
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+}
+
+.cardImage img{
+    width: 120px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+.cardInfo div{
+    margin-bottom: 6px;
+}
