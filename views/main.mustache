@@ -7,12 +7,9 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-
-    <p class = 'testing'>Testing Purposes css connection</p>
-    
     <h2><a href = "addGameList">Add a Game</a></h2>
     {{ #addGame }}
-    <form action="/addGame" method="POST">
+    <form action="/addGame" method="POST" class="wholeForm">
         <div>
             <label for="title">Game Title *</label>
             <input id="title" name="title" type="text" required maxlength="100" />
@@ -85,6 +82,10 @@
                         <div><b>First played:</b> {{ first_played }}</div>
                         <div><b>Hours:</b> {{ total_hours }}</div>
                         <div><b>Favourite:</b> {{ favourite }}</div>
+                        <form action="/deleteGame" method="POST">
+                            <input type="hidden" name="id" value="{{ id }}"> <!-- Hidden input in form to route deleteGame-->
+                            <button type="submit">Delete Post</button>
+                        </form>
                     </div>
                 </div>
             </div>

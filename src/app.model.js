@@ -14,6 +14,10 @@ async function makeConnection() {
     })
 }
 
+async function deleteGame(id) {
+    await db.run("DELETE FROM games WHERE id = ?", [id]);
+}
+
 async function addGame(title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite) {
     
     const favouriteValue = favourite ? 1 : 0;
@@ -30,7 +34,7 @@ async function displayAllRecords() {
     return results;
 }
 
-module.exports = { makeConnection, displayAllRecords, addGame };
+module.exports = { makeConnection, displayAllRecords, addGame, deleteGame };
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (

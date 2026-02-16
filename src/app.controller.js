@@ -42,6 +42,15 @@ app.get("/", async function(req, res) {
     res.render("main", { games: gameArray });
 });
 
+app.post('/deleteGame', async function(req, res) {
+
+    await Model.deleteGame(req.body.id);
+
+    const gameArray = await Model.displayAllRecords();
+    res.render("main", { games: gameArray });
+
+});
+
 app.listen(3000, () => {
     console.log("Server listening on port 3000!")
 }); 
