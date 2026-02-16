@@ -19,10 +19,12 @@ body {
 }
 
 .card{
-    border: 3px solid grey;
+    border: 1px solid grey;
     border-radius: 12px;
     padding: 14px;
-    background: white;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
 }
 
 .cardTop{
@@ -65,7 +67,40 @@ body {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background: white;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid grey;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* label width + input */
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.formRow label {
+    font-weight: 600;
+}
+
+.formRow input {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.addGameTitle {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.addGameButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background: blue;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
 }

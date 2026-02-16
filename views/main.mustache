@@ -7,94 +7,109 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h2><a href = "addGameList">Add a Game</a></h2>
-    {{ #addGame }}
-    <form action="/addGame" method="POST" class="wholeForm">
-        <div>
-            <label for="title">Game Title *</label>
-            <input id="title" name="title" type="text" required maxlength="100" />
+    <div class='tripleSegment'>
+
+        <div> <!-- Segment one, aggregate value SQL display -->
+
         </div>
 
-        <div>
-            <label for="personal_rating">Personal Rating (0–10) *</label>
-            <input id="personal_rating" name="personal_rating" type="number" required min="0" max="10" />
-        </div>
+        <hr>
 
-        <div>
-            <label for="image">image</label>
-            <input id="image" name="image" type="text" maxlength="500" />
-        </div>
-
-        <div>
-            <label for="opinion">Opinion</label>
-            <input id="opinion" name="opinion" type="text" maxlength="500" />
-        </div>
-
-        <div>
-            <label for="number_times_played">Number Times Played *</label>
-            <input id="number_times_played" name="number_times_played" type="number" required min="0" />
-        </div>
-
-        <div>
-            <label for="first_played">First Played *</label>
-            <input id="first_played" name="first_played" type="date" required />
-        </div>
-
-        <div>
-            <label for="total_hours">Hours Total</label>
-            <input id="total_hours" name="total_hours" type="number" required min="0" />
-        </div>
-
-        <div>
-            <label for="favourite">Favourite</label>
-            <input id="favourite" name="favourite" type="checkbox" value="1" />
-        </div>
-
-        <button type="submit">Submit</button>
-    </form>
-    {{ /addGame }}
-
-    <hr>
-
-    <div class="cards">
-        {{#games}}
-            <div class="card">
-                <div class="cardTop">
-                    <div class="cardTitle">{{ title }}</div>
-                    <div class="cardRating">⭐ {{ personal_rating }}/10</div>
+        <div> <!-- Segment two, adding a game -->
+            <h2 class='addGameTitle'>
+                <a class='addGameButton' href="addGameList">Add a Game</a>
+            </h2>
+            {{ #addGame }}
+            <form action="/addGame" method="POST" class="wholeForm">
+                <div class='formRow'>
+                    <label for="title">Game Title</label>
+                    <input id="title" name="title" type="text" required maxlength="100" />
                 </div>
 
-                <div class="cardBody">
-                    <div class="cardImage">
-                        {{#image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
-                            <img src="{{ image }}" alt="cover"
-                                loading="lazy" 
-                                onerror="this.src='/placeholder.png'">
-                        {{/image}}
-                        {{^image}} <!-- If image does not load -->
-                            <img src="/placeholder.png" alt="placeholder" loading="lazy">
-                        {{/image}}
-                    </div>
-
-                    <div class="cardInfo">
-                        {{#opinion}}<div><b>Opinion:</b> {{ opinion }}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
-                        <div><b>Times played:</b> {{ number_times_played }}</div>
-                        <div><b>First played:</b> {{ first_played }}</div>
-                        <div><b>Hours:</b> {{ total_hours }}</div>
-                        <div><b>Favourite:</b> {{ favourite }}</div>
-                        <form action="/deleteGame" method="POST">
-                            <input type="hidden" name="id" value="{{ id }}"> <!-- Hidden input in form to route deleteGame-->
-                            <button type="submit">Delete Post</button>
-                        </form>
-                    </div>
+                <div class='formRow'>
+                    <label for="personal_rating">Personal Rating (0–10)</label>
+                    <input id="personal_rating" name="personal_rating" type="number" required min="0" max="10" />
                 </div>
+
+                <div class='formRow'>
+                    <label for="image">image</label>
+                    <input id="image" name="image" type="text" maxlength="500" />
+                </div>
+
+                <div class='formRow'>
+                    <label for="opinion">Opinion</label>
+                    <input id="opinion" name="opinion" type="text" maxlength="500" />
+                </div>
+
+                <div class='formRow'>
+                    <label for="number_times_played">Number Times Played</label>
+                    <input id="number_times_played" name="number_times_played" type="number" required min="0" />
+                </div>
+
+                <div class='formRow'>
+                    <label for="first_played">First Played</label>
+                    <input id="first_played" name="first_played" type="date" required />
+                </div>
+
+                <div class='formRow'>
+                    <label for="total_hours">Average Hours To Complete</label>
+                    <input id="total_hours" name="total_hours" type="number" required min="0" />
+                </div>
+
+                <div class='formRow'>
+                    <label for="favourite">Favourite</label>
+                    <input id="favourite" name="favourite" type="checkbox" value="1" />
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+            {{ /addGame }}
+        </div>
+
+        <hr>
+
+        <div> <!-- Segment three, displaying games -->
+            <div class="cards">
+                {{#games}}
+                    <div class="card">
+                        <div class="cardTop">
+                            <div class="cardTitle">{{ title }}</div>
+                            <div class="cardRating">⭐ {{ personal_rating }}/10</div>
+                        </div>
+
+                        <div class="cardBody">
+                            <div class="cardImage">
+                                {{#image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
+                                    <img src="{{ image }}" alt="cover"
+                                        loading="lazy" 
+                                        onerror="this.src='/placeholder.png'">
+                                {{/image}}
+                                {{^image}} <!-- If image does not load -->
+                                    <img src="/placeholder.png" alt="placeholder" loading="lazy">
+                                {{/image}}
+                            </div>
+
+                            <div class="cardInfo">
+                                {{#opinion}}<div><b>Opinion:</b> {{ opinion }}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
+                                <div><b>Times played:</b> {{ number_times_played }}</div>
+                                <div><b>First played:</b> {{ first_played }}</div>
+                                <div><b>Hours:</b> {{ total_hours }}</div>
+                                <div><b>Favourite:</b> {{ favourite }}</div>
+                                <form action="/deleteGame" method="POST">
+                                    <input type="hidden" name="id" value="{{ id }}"> <!-- Hidden input in form to route deleteGame-->
+                                    <button type="submit">Delete Post</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {{/games}}
+
+                {{^games}} <!-- If there are no values within table -->
+                    <p>No games yet. Add one above.</p>
+                {{/games}}
             </div>
-        {{/games}}
+        </div>
 
-        {{^games}} <!-- If there are no values within table -->
-            <p>No games yet. Add one above.</p>
-        {{/games}}
     </div>
-
 </body>
 </html>
