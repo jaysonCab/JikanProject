@@ -9,8 +9,21 @@
 <body>
     <div class='tripleSegment'>
 
-        <div> <!-- Segment one, aggregate value SQL display -->
+        <div class="summaryBar"> <!-- Segment one, aggregate value SQL display -->
+            <div class="summaryItem">
+                <div class="summaryLabel">Total Games Played</div>
+                <div class="summaryValue">{{ summary.total_games }}</div>
+            </div>
 
+            <div class="summaryItem">
+                <div class="summaryLabel">Total Hours Spent</div>
+                <div class="summaryValue">{{ summary.total_hours }}</div>
+            </div>
+
+            <div class="summaryItem">
+                <div class="summaryLabel">Average Rating</div>
+                <div class="summaryValue">{{ summary.average_rating }}</div>
+            </div>
         </div>
 
         <hr>
@@ -99,10 +112,19 @@
                                 <div><b>First played:</b> {{ first_played }}</div>
                                 <div><b>Hours:</b> {{ total_hours }}</div>
                                 <div><b>Favourite:</b> {{ favourite }}</div>
-                                <form action="/deleteGame" method="POST">
-                                    <input type="hidden" name="id" value="{{ id }}"> <!-- Hidden input in form to route deleteGame-->
-                                    <button type="submit">Delete Post</button>
-                                </form>
+
+                                <div class="cardUpdateDelete">
+                                    <form action="/deleteGame" method="POST">
+                                        <input type="hidden" name="id" value="{{ id }}"> <!-- Hidden input in form to route deleteGame-->
+                                        <button type="submit" class='deleteButton'>Delete Post</button>
+                                    </form>
+
+                                    <!-- Will implement edit feature later, just doing visuals below 768 pixels-->
+                                    <form action="/editGame/{{ id }}" method="GET">
+                                        <button type="submit" class="editButton">Edit</button>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>

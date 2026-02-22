@@ -14,10 +14,16 @@ app.use( express.urlencoded({ extended: false }) ); // Middleware to parse form 
 
 Model.makeConnection();
 
+app.get("/", async function(req, res) { // Default page
+    const gameArray = await Model.displayAllRecords();
+    const summary = await Model.getSummaryStats();
+    res.render("main", { games: gameArray, summary: summary });
+});
+
 app.get("/addGameList", async function(req, res) {
     const gameArray = await Model.displayAllRecords();
-
-    res.render("main", { games: gameArray, addGame: true });
+    const summary = await Model.getSummaryStats();
+    res.render("main", { games: gameArray, summary: summary });
 });
 
 app.post('/addGame', async function(req, res) {
@@ -33,22 +39,16 @@ app.post('/addGame', async function(req, res) {
     );
 
     const gameArray = await Model.displayAllRecords();
-    res.render("main", { games: gameArray });
-});
-
-app.get("/", async function(req, res) {
-    const gameArray = await Model.displayAllRecords();
-
-    res.render("main", { games: gameArray });
+    const summary = await Model.getSummaryStats();
+    res.render("main", { games: gameArray, summary: summary });
 });
 
 app.post('/deleteGame', async function(req, res) {
-
     await Model.deleteGame(req.body.id);
 
+    const summary = await Model.getSummaryStats();
     const gameArray = await Model.displayAllRecords();
-    res.render("main", { games: gameArray });
-
+    res.render("main", { games: gameArray, summary: summary });
 });
 
 app.listen(3000, () => {

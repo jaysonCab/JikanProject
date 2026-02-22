@@ -34,7 +34,19 @@ async function displayAllRecords() {
     return results;
 }
 
-module.exports = { makeConnection, displayAllRecords, addGame, deleteGame };
+async function getSummaryStats() {
+    const result = await db.get(`
+        SELECT 
+            COUNT(*) AS total_games,
+            COALESCE(SUM(total_hours), 0) AS total_hours,
+            ROUND(AVG(personal_rating), 2) AS average_rating
+        FROM games
+    `);
+
+    return result;
+}
+
+module.exports = { makeConnection, displayAllRecords, addGame, deleteGame, getSummaryStats };
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (

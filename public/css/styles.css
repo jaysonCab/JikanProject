@@ -13,11 +13,6 @@ body {
     align-items: start;
 }
 
-/* When screen is below 900px, limit css */
-@media (max-width: 900px){
-    .cards{ grid-template-columns: 1fr; }
-}
-
 .card{
     border: 1px solid grey;
     border-radius: 12px;
@@ -75,7 +70,7 @@ body {
 
 .formRow {
     display: grid;
-    grid-template-columns: 200px 1fr; /* label width + input */
+    grid-template-columns: 200px 1fr;
     align-items: center;
     margin-bottom: 12px;
 }
@@ -114,4 +109,71 @@ body {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
+}
+
+.summaryBar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.summaryItem {
+    text-align: center;
+}
+
+.summaryLabel {
+    display: block;
+    font-size: 0.9rem;
+    color: black;
+    margin-bottom: 6px;
+}
+
+.summaryValue {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: black;
+}
+
+.cardUpdateDelete {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.cardUpdateDelete form {
+    flex: 1;
+}
+
+.cardUpdateDelete button { /* Encapsulates both buttons in flexbox */
+    width: 100%;      
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: white;
+    color: black;
+}
+
+/* When screen is below 768px, limit css */
+@media (max-width: 768px){
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .summaryBar {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .cardUpdateDelete {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
 }
