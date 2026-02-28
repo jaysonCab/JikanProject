@@ -12,17 +12,17 @@
         <div class="summaryBar"> <!-- Segment one, aggregate value SQL display -->
             <div class="summaryItem">
                 <div class="summaryLabel">Total Games Played</div>
-                <div class="summaryValue">{{ summary.total_games }}</div>
+                <div class="summaryValue">{{summary.total_games}}</div>
             </div>
 
             <div class="summaryItem">
                 <div class="summaryLabel">Total Hours Spent</div>
-                <div class="summaryValue">{{ summary.total_hours }}</div>
+                <div class="summaryValue">{{summary.total_hours}}</div>
             </div>
 
             <div class="summaryItem">
                 <div class="summaryLabel">Average Rating</div>
-                <div class="summaryValue">{{ summary.average_rating }}</div>
+                <div class="summaryValue">{{summary.average_rating}}</div>
             </div>
         </div>
 
@@ -30,9 +30,9 @@
 
         <div> <!-- Segment two, adding a game -->
             <h2 class='addGameTitle'>
-                <a class='addGameButton' href="addGameList">Add a Game</a>
+                <a class='addGameButton' href="/addGameList">Add a Game</a>
             </h2>
-            {{ #addGame }}
+            {{#addGame}}
             <form action="/addGame" method="POST" class="wholeForm">
                 <div class='formRow'>
                     <label for="title">Game Title</label>
@@ -80,24 +80,78 @@
                 </div>
 
             </form>
-            {{ /addGame }}
+            {{/addGame}}
         </div>
 
         <hr>
+
+        {{#editGame}}  <!-- Segment two also, editting a game -->
+        <form action="/editGame/{{id}}" method="POST" class="wholeForm">
+            <h2>Edit Game</h2>
+
+            <div class='formRow'>
+                <label for="title">Game Title</label>
+                <input id="title" name="title" type="text" required maxlength="100" value="{{title}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="personal_rating">Personal Rating (0–10)</label>
+                <input id="personal_rating" name="personal_rating" type="number" required min="0" max="10" value="{{personal_rating}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="image">image</label>
+                <input id="image" name="image" type="text" maxlength="500" value="{{image}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="opinion">Opinion</label>
+                <input id="opinion" name="opinion" type="text" maxlength="500" value="{{opinion}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="number_times_played">Number Times Played</label>
+                <input id="number_times_played" name="number_times_played" type="number" required min="0" value="{{number_times_played}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="first_played">First Played</label>
+                <input id="first_played" name="first_played" type="date" required value="{{first_played}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="total_hours">Average Hours To Complete</label>
+                <input id="total_hours" name="total_hours" type="number" required min="0" value="{{total_hours}}" />
+            </div>
+
+            <div class='formRow'>
+                <label for="favourite">Favourite</label>
+                <input id="favourite" name="favourite" type="checkbox" value="1" {{#isFavourite}}checked{{/isFavourite}} />
+            </div>
+
+            <div class='formRow'>
+                <div></div>
+                <button class='submitButton' type="submit">Save Changes</button>
+            </div>
+
+            <a class="addGameButton" href="/">Cancel</a>
+        </form>
+        <hr>
+        {{/editGame}}
 
         <div> <!-- Segment three, displaying games -->
             <div class="cards">
                 {{#games}}
                     <div class="card">
                         <div class="cardTop">
-                            <div class="cardTitle">{{ title }}</div>
-                            <div class="cardRating">⭐ {{ personal_rating }}/10</div>
+                            <div class="cardTitle">{{title}}</div>
+                            <div class="cardRating">⭐ {{personal_rating}}/10</div>
                         </div>
 
                         <div class="cardBody">
                             <div class="cardImage">
                                 {{#image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
-                                    <img src="{{ image }}" alt="cover"
+                                    <img src="{{image}}" alt="cover"
                                         loading="lazy" 
                                         onerror="this.src='/placeholder.png'">
                                 {{/image}}
@@ -107,20 +161,20 @@
                             </div>
 
                             <div class="cardInfo">
-                                {{#opinion}}<div><b>Opinion:</b> {{ opinion }}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
-                                <div><b>Times played:</b> {{ number_times_played }}</div>
-                                <div><b>First played:</b> {{ first_played }}</div>
-                                <div><b>Hours:</b> {{ total_hours }}</div>
-                                <div><b>Favourite:</b> {{ favourite }}</div>
+                                {{#opinion}}<div><b>Opinion:</b> {{opinion}}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
+                                <div><b>Times played:</b> {{number_times_played}}</div>
+                                <div><b>First played:</b> {{first_played}}</div>
+                                <div><b>Hours:</b> {{total_hours}}</div>
+                                <div><b>Favourite:</b> {{favourite}}</div>
 
                                 <div class="cardUpdateDelete">
                                     <form action="/deleteGame" method="POST">
-                                        <input type="hidden" name="id" value="{{ id }}"> <!-- Hidden input in form to route deleteGame-->
+                                        <input type="hidden" name="id" value="{{id}}"> <!-- Hidden input in form to route deleteGame-->
                                         <button type="submit" class='deleteButton'>Delete Post</button>
                                     </form>
 
                                     <!-- Will implement edit feature later, just doing visuals below 768 pixels-->
-                                    <form action="/editGame/{{ id }}" method="GET">
+                                    <form action="/editGame/{{id}}" method="GET">
                                         <button type="submit" class="editButton">Edit</button>
                                     </form>
                                 </div>

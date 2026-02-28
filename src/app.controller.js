@@ -14,16 +14,16 @@ app.use( express.urlencoded({ extended: false }) ); // Middleware to parse form 
 
 Model.makeConnection();
 
-app.get("/", async function(req, res) { // Default page
+app.get("/", async function(req, res) { // Default Page
     const gameArray = await Model.displayAllRecords();
     const summary = await Model.getSummaryStats();
-    res.render("main", { games: gameArray, summary: summary });
+    res.render("main", { games: gameArray, summary: summary, addGame: false });
 });
 
 app.get("/addGameList", async function(req, res) {
     const gameArray = await Model.displayAllRecords();
     const summary = await Model.getSummaryStats();
-    res.render("main", { games: gameArray, summary: summary });
+    res.render("main", { games: gameArray, summary: summary, addGame: true });
 });
 
 app.post('/addGame', async function(req, res) {
@@ -49,6 +49,34 @@ app.post('/deleteGame', async function(req, res) {
     const summary = await Model.getSummaryStats();
     const gameArray = await Model.displayAllRecords();
     res.render("main", { games: gameArray, summary: summary });
+});
+
+app.get("/editGame/:id", async function (req, res) {
+    const id = req.params.id;
+
+    const game = await Model.getGameById(id);
+    const summary = await Model.getSummaryStats();
+    const gameArray = await Model.displayAllRecords();
+
+    res.render("main", { games: gameArray, summary: summary, editGame: game });
+});
+
+app.post("/editGame/:id", async function (req, res) {
+    const id = req.params.id;
+
+    await Model.updateGame(
+        id,
+        req.body.title,
+        req.body.personal_rating,
+        req.body.image,
+        req.body.opinion,
+        req.body.number_times_played,
+        req.body.first_played,
+        req.body.total_hours,
+        req.body.favourite
+    );
+
+    res.redirect("/"); // Back to main page 
 });
 
 app.listen(3000, () => {

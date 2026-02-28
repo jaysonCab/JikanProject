@@ -46,7 +46,29 @@ async function getSummaryStats() {
     return result;
 }
 
-module.exports = { makeConnection, displayAllRecords, addGame, deleteGame, getSummaryStats };
+async function getGameById(id) {
+    return await db.get("SELECT * FROM games WHERE id = ?", [id]);
+}
+
+async function updateGame(id, title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favourite) {
+    const favValue = favourite ? 1 : 0;
+
+    await db.run(
+        `UPDATE games
+         SET title = ?,
+             personal_rating = ?,
+             image = ?,
+             opinion = ?,
+             number_times_played = ?,
+             first_played = ?,
+             total_hours = ?,
+             favourite = ?
+         WHERE id = ?`,
+        [title, personal_rating, image, opinion, number_times_played, first_played, total_hours, favValue, id]
+    );
+}
+
+module.exports = { makeConnection, displayAllRecords, addGame, deleteGame, getSummaryStats, getGameById, updateGame };
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (
