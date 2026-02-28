@@ -15,9 +15,24 @@ app.use( express.urlencoded({ extended: false }) ); // Middleware to parse form 
 Model.makeConnection();
 
 app.get("/", async function(req, res) { // Default Page
-    const gameArray = await Model.displayAllRecords();
+    const sort = req.query.sort
+    const search = req.query.search;
+
+    const gameArray =
+        sort === "favourite"
+            ? await Model.displayAllRecordsFavouriteFirst()
+        : sort === "rating"
+            ? await Model.displayAllRecordsByRating()
+        : sort === "hours"
+            ? await Model.displayAllRecordsByHours()
+        : sort === "date"
+            ? await Model.displayAllRecordsByDate()
+        : sort === "titleName"
+            ? await Model.displayAllRecordsByTitleName(search)
+        : await Model.displayAllRecords();
+
     const summary = await Model.getSummaryStats();
-    res.render("main", { games: gameArray, summary: summary, addGame: false });
+    res.render("main", { games: gameArray, summary: summary, addGame: false, searchQuery: search });
 });
 
 app.get("/addGameList", async function(req, res) {

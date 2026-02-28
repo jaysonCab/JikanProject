@@ -34,6 +34,59 @@ async function displayAllRecords() {
     return results;
 }
 
+async function displayAllRecordsFavouriteFirst() {
+    const results = await db.all(`
+        SELECT *
+        FROM games
+        ORDER BY favourite DESC
+    `);
+    return results;
+};
+
+async function displayAllRecordsByRating() {
+    const results = await db.all(`
+        SELECT *
+        FROM games
+        ORDER BY personal_rating DESC
+    `);
+    return results;
+};
+
+async function displayAllRecordsByHours() {
+    const results = await db.all(`
+        SELECT *
+        FROM games
+        ORDER BY total_hours DESC
+    `);
+    return results;
+};
+
+async function displayAllRecordsByDate() {
+    const results = await db.all(`
+        SELECT *
+        FROM games
+        ORDER BY first_played DESC
+    `);
+    return results;
+};
+
+async function displayAllRecordsByTitleName(search) {
+    if (!search) {
+        return db.all(`
+            SELECT *
+            FROM games
+            ORDER BY first_played DESC
+        `);
+    }
+
+    return db.all(`
+        SELECT *
+        FROM games
+        ORDER BY (title LIKE ?) DESC,
+            first_played DESC
+    `, [`%${search}%`]);
+};
+
 async function getSummaryStats() {
     const result = await db.get(`
         SELECT 
@@ -68,7 +121,7 @@ async function updateGame(id, title, personal_rating, image, opinion, number_tim
     );
 }
 
-module.exports = { makeConnection, displayAllRecords, addGame, deleteGame, getSummaryStats, getGameById, updateGame };
+module.exports = { makeConnection, displayAllRecords, addGame, deleteGame, getSummaryStats, getGameById, updateGame, displayAllRecordsFavouriteFirst, displayAllRecordsByRating, displayAllRecordsByHours, displayAllRecordsByDate, displayAllRecordsByTitleName };
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (

@@ -136,8 +136,23 @@
 
             <a class="addGameButton" href="/">Cancel</a>
         </form>
-        <hr>
         {{/editGame}}
+
+        <div class="filterBar">
+            <a href="/?sort=favourite" class="filterButton">Favourites First</a>
+            <a href="/?sort=hours" class="filterButton">Most Hours Played</a>
+            <a href="/?sort=rating" class="filterButton">Highest Rating</a>
+            <a href="/?sort=date" class="filterButton">Recently Played</a>
+            <a href="/" class="filterButton">Default Order</a>
+        </div>
+
+        <div class="searchBar">
+            <form action="/" method="GET">
+                <input type="hidden" name="sort" value="titleName">
+                <input type="text" name="search" placeholder="Search by title..." value="{{searchQuery}}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
 
         <div> <!-- Segment three, displaying games -->
             <div class="cards">
