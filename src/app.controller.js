@@ -94,6 +94,23 @@ app.post("/editGame/:id", async function (req, res) {
     res.redirect("/"); // Back to main page 
 });
 
+app.post("/updateTimesPlayed", async function(req, res) {
+    await Model.updateTimesPlayed(
+        req.body.id,
+        req.body.number_times_played
+    );
+
+    res.redirect("/"); // reload homepage so summary updates
+});
+
+// Load new page for single card click
+app.get("/game/:id", async function (req, res) {
+    const id = req.params.id;
+    const game = await Model.getGameById(id);
+
+    res.render("game", { game });
+});
+
 app.listen(3000, () => {
     console.log("Server listening on port 3000!")
 }); 

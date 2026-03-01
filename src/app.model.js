@@ -91,7 +91,7 @@ async function getSummaryStats() {
     const result = await db.get(`
         SELECT 
             COUNT(*) AS total_games,
-            COALESCE(SUM(total_hours), 0) AS total_hours,
+            COALESCE(SUM(total_hours * number_times_played), 0) AS total_hours,
             ROUND(AVG(personal_rating), 2) AS average_rating
         FROM games
     `);
@@ -121,7 +121,28 @@ async function updateGame(id, title, personal_rating, image, opinion, number_tim
     );
 }
 
-module.exports = { makeConnection, displayAllRecords, addGame, deleteGame, getSummaryStats, getGameById, updateGame, displayAllRecordsFavouriteFirst, displayAllRecordsByRating, displayAllRecordsByHours, displayAllRecordsByDate, displayAllRecordsByTitleName };
+async function updateTimesPlayed(id, number_times_played) {
+    return db.run(
+        "UPDATE games SET number_times_played = ? WHERE id = ?",
+        [number_times_played, id]
+    );
+};
+
+module.exports = {
+    makeConnection,
+    displayAllRecords,
+    addGame,
+    deleteGame,
+    getSummaryStats,
+    getGameById,
+    updateGame,
+    displayAllRecordsFavouriteFirst,
+    displayAllRecordsByRating,
+    displayAllRecordsByHours,
+    displayAllRecordsByDate,
+    displayAllRecordsByTitleName,
+    updateTimesPlayed
+};
 
 // await db.exec(`
 //     CREATE TABLE IF NOT EXISTS games (

@@ -156,54 +156,77 @@
 
         <div> <!-- Segment three, displaying games -->
             <div class="cards">
+
                 {{#games}}
-                    <div class="card">
-                        <div class="cardTop">
-                            <div class="cardTitle">{{title}}</div>
-                            <div class="cardRating">⭐ {{personal_rating}}/10</div>
+                <div class="card">
+
+                    <div class="cardTop">
+                        <div class="cardTitle">
+                            <a href="/game/{{id}}" class="cardLink">
+                                {{title}}
+                            </a>
+                        </div>
+                        <div class="cardRating">⭐ {{personal_rating}}/10</div>
+                    </div>
+
+                    <div class="cardBody">
+                        <div class="cardImage">
+                            {{#image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
+                                <img src="{{image}}" alt="cover"
+                                    loading="lazy" 
+                                    onerror="this.src='/placeholder.png'">
+                            {{/image}}
+                            {{^image}} <!-- If image does not load -->
+                                <img src="/placeholder.png" alt="placeholder" loading="lazy">
+                            {{/image}}
                         </div>
 
-                        <div class="cardBody">
-                            <div class="cardImage">
-                                {{#image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
-                                    <img src="{{image}}" alt="cover"
-                                        loading="lazy" 
-                                        onerror="this.src='/placeholder.png'">
-                                {{/image}}
-                                {{^image}} <!-- If image does not load -->
-                                    <img src="/placeholder.png" alt="placeholder" loading="lazy">
-                                {{/image}}
+                        <div class="cardInfo">
+                            {{#opinion}}<div><b>Opinion:</b> {{opinion}}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
+                            
+                            <div class="timesPlayedRow">
+                                <b>Times played:</b>
+                                <form action="/updateTimesPlayed" method="POST" class="inlineForm">
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <input
+                                        type="number"
+                                        name="number_times_played"
+                                        min="0"
+                                        step="1"
+                                        value="{{number_times_played}}"
+                                        onchange="this.form.submit()"
+                                    >
+                                </form>
                             </div>
 
-                            <div class="cardInfo">
-                                {{#opinion}}<div><b>Opinion:</b> {{opinion}}</div>{{/opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
-                                <div><b>Times played:</b> {{number_times_played}}</div>
-                                <div><b>First played:</b> {{first_played}}</div>
-                                <div><b>Hours:</b> {{total_hours}}</div>
-                                <div><b>Favourite:</b> {{favourite}}</div>
+                            <div><b>First played:</b> {{first_played}}</div>
+                            <div><b>Hours:</b> {{total_hours}}</div>
+                            <div><b>Favourite:</b> {{favourite}}</div>
 
-                                <div class="cardUpdateDelete">
-                                    <form action="/deleteGame" method="POST">
-                                        <input type="hidden" name="id" value="{{id}}"> <!-- Hidden input in form to route deleteGame-->
-                                        <button type="submit" class='deleteButton'>Delete Post</button>
-                                    </form>
+                            <div class="cardUpdateDelete">
+                                <form action="/deleteGame" method="POST">
+                                    <input type="hidden" name="id" value="{{id}}"> <!-- Hidden input in form to route deleteGame-->
+                                    <button type="submit" class='deleteButton'>Delete Post</button>
+                                </form>
 
-                                    <!-- Will implement edit feature later, just doing visuals below 768 pixels-->
-                                    <form action="/editGame/{{id}}" method="GET">
-                                        <button type="submit" class="editButton">Edit</button>
-                                    </form>
-                                </div>
-
+                                <form action="/editGame/{{id}}" method="GET">
+                                    <button type="submit" class="editButton">Edit</button>
+                                </form>
                             </div>
+
                         </div>
                     </div>
+
+                </div>
                 {{/games}}
 
                 {{^games}} <!-- If there are no values within table -->
                     <p>No games yet. Add one above.</p>
                 {{/games}}
+
             </div>
         </div>
+
 
     </div>
 </body>

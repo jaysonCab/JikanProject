@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{game.title}} - Game Reviewer</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="tripleSegment">
+
+        <div class="filterBar">
+            <a href="/" class="filterButton">← Back to Main Menu</a>
+        </div>
+
+        <div class="cardsSingle">
+            <div class=" card cardSingle"> <!--2 classes in one -->
+
+                <div class="cardTop">
+                    <div class="cardTitle">{{game.title}}</div>
+                    <div class="cardRating">⭐ {{game.personal_rating}}/10</div>
+                </div>
+
+                <div class="cardBody">
+                    <div class="cardImage">
+                        {{#game.image}} <!-- Lazy loading type doesn't allow it to load until it is fully ready | performance & continuity purposes -->
+                            <img src="{{game.image}}" alt="cover"
+                                loading="lazy"
+                                onerror="this.src='/placeholder.png'">
+                        {{/game.image}}
+                        {{^game.image}} <!-- If image does not load -->
+                            <img src="/placeholder.png" alt="placeholder" loading="lazy">
+                        {{/game.image}}
+                    </div>
+
+                    <div class="cardInfo">
+                        {{#game.opinion}}<div><b>Opinion:</b> {{game.opinion}}</div>{{/game.opinion}} <!-- #opinion checks to see if there is value, if there is then display -->
+                        <div><b>Times played:</b> {{game.number_times_played}}</div>
+                        <div><b>First played:</b> {{game.first_played}}</div>
+                        <div><b>Hours:</b> {{game.total_hours}}</div>
+                        <div><b>Favourite:</b> {{game.favourite}}</div>
+
+                        <div class="cardUpdateDelete">
+                            <form action="/deleteGame" method="POST">
+                                <input type="hidden" name="id" value="{{game.id}}"> <!-- Hidden input in form to route deleteGame-->
+                                <button type="submit" class='deleteButton'>Delete Post</button>
+                            </form>
+
+                            <form action="/editGame/{{game.id}}" method="GET">
+                                <button type="submit" class="editButton">Edit</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
